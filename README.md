@@ -21,6 +21,7 @@ All you need is to do is download the script and have python installed.
 Then you need to edit the variables (left blank) to reflect your account/lists.
 
 VARIABLES
+
 Mailchimp
 
 Getting started with mailchimp API: http://developer.mailchimp.com/documentation/mailchimp/guides/get-started-with-mailchimp-api-3/
