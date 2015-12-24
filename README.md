@@ -22,18 +22,27 @@ Then you need to edit the variables (left blank) to reflect your account/lists.
 
 VARIABLES
 Mailchimp
+
 Getting started with mailchimp API: http://developer.mailchimp.com/documentation/mailchimp/guides/get-started-with-mailchimp-api-3/
+
 mcprivatekey = '' #this is your api key that allows you access
+
 mcregion = '' #this is the <dc> (datacenter) where your account is, us11, us6, etc. It's in your url when you are logged in.
+
 mchttppass = mcprivatekey + '-' + mcregion
 
 How to find a mailchimp list id: http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id
+
 mcchecklistid = '' #the first list, the one you want to check the RSVPs against
+
 mcpostlistid = ''  #the second list, the one to which you want to post the RSVP emails not on the first list
 
 Eventbrite
+
 https://www.eventbrite.com/developer/v3/quickstart/
+
 eboauthtoken = '' #Your OAthtoken
+
 ebliveeventid = '' #The id of the live event
 
 ## Contributors
