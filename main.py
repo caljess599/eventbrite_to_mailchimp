@@ -18,7 +18,7 @@ mcchecklistid = ''
 mcpostlistid = ''
 
 #Eventbrite
-eboathtoken = ''
+eboauthtoken = ''
 ebliveeventid = ''
 
 # FUNCTIONS
@@ -48,7 +48,7 @@ def mailchimp_post(jsonobject):
 
 # MAIN PROGRAM
 # get live event orders from Eventbrite
-eventbrite = Eventbrite(eboathtoken)
+eventbrite = Eventbrite(eboauthtoken)
 p = eventbrite.get_event_attendees(ebliveeventid)
 lo_emails=[]
 for index in range(len(p['attendees'])):
