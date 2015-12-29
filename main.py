@@ -52,7 +52,9 @@ eventbrite = Eventbrite(eboauthtoken)
 p = eventbrite.get_event_attendees(ebliveeventid)
 lo_emails=[]
 for index in range(len(p['attendees'])):
-        lo_emails.append((p['attendees'][index]['profile']['email']))
+        g = p['attendees'][index]['profile']
+        if 'email' in g:
+                lo_emails.append(g['email'])
 
 # hash those emails into md5
 hashed_emails=[]
