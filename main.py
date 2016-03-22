@@ -22,6 +22,14 @@ eboauthtoken = ''
 ebliveeventid = ''
 
 # FUNCTIONS
+def get_page(pn):
+    pn=str(pn)
+    response = requests.get(
+        "https://www.eventbriteapi.com/v3/events/"+ebliveeventid+"/attendees/?page="+pn+"&token="+eboathtoken,
+        verify = True,
+    )
+    return response.json()
+
 # make md5 hash of email address
 def mailchimp_call(hashedemail):
         url_base = 'https://' + mcregion + '.api.mailchimp.com/3.0/lists/' + mcchecklistid + '/members/'
@@ -48,13 +56,19 @@ def mailchimp_post(jsonobject):
 
 # MAIN PROGRAM
 # get live event orders from Eventbrite
-eventbrite = Eventbrite(eboauthtoken)
+eventbrite = Eventbrite(eboathtoken)
 p = eventbrite.get_event_attendees(ebliveeventid)
+q =  p['pagination']['page_count']
+r = range(1,q+1)
+#print(r)
+
 lo_emails=[]
-for index in range(len(p['attendees'])):
-        g = p['attendees'][index]['profile']
-        if 'email' in g:
-                lo_emails.append(g['email'])
+for page in r:
+        ss = get_page(page)
+        for index in range(len(ss['attendees'])):
+                g = ss['attendees'][index]['profile']
+                if 'email' in g:
+                        lo_emails.append(g['email'])
 
 # hash those emails into md5
 hashed_emails=[]
@@ -67,7 +81,7 @@ mailchimp_responses=[]
 for email in hashed_emails:
         u = mailchimp_call(email)
         mailchimp_responses.append(u)
-        
+
 # edit the results to see which emails are on the list and which aren't
 # note: mailchimp_responses is a list of dictionaries, so x is a dictionary!
 mailchimp_edited=[]
@@ -79,7 +93,7 @@ for x in mailchimp_responses:
                 y = q.split('\"')[1]
                 mailchimp_edited.append(y)
 
-#output
+#output  
 list_length=len(lo_emails)
 print "There are", list_length, "RSVPs to live event", ebliveeventid
 
@@ -96,6 +110,11 @@ for i in range(list_length):
 print(final_results)
 ps = makedatadict(final_results)
 print(ps)
+
+# post entries to mailchimp list
+for dict in ps:
+        t = mailchimp_post(dict)
+        print(t)
 
 # post entries to mailchimp list
 for dict in ps:
